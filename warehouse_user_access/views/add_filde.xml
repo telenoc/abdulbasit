@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <record id="res_users_view_form_preferences_allowed_warehouse" model="ir.ui.view">-->
+<!--        <field name="name">res.users.view.form.preferences.allowed.warehouse</field>-->
+<!--        <field name="model">res.users</field>-->
+<!--        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <group name="signature" position="after">-->
+<!--                <group name="Allowed Warehouse">-->
+<!--                    <field name="allowed_warehouse" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>-->
+<!--                </group>-->
+<!--            </group>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="res_users_view_simple_form_allowed_warehouse" model="ir.ui.view">-->
+<!--        <field name="name">res.users.view.simple.form.allowed.warehouse</field>-->
+<!--        <field name="model">res.users</field>-->
+<!--        <field name="inherit_id" ref="base.view_users_simple_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <group name="phone_numbers" position="after">-->
+<!--            <group name="Allowed Warehouse">-->
+<!--                <field name="allowed_warehouse" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>-->
+<!--            </group>-->
+<!--            </group>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="res_users_view_form_allowed_warehouse" model="ir.ui.view">-->
+<!--        <field name="name">res.users.view.form.allowed.warehouse</field>-->
+<!--        <field name="model">res.users</field>-->
+<!--        <field name="inherit_id" ref="base.view_users_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <group name="messaging" position="after">-->
+<!--                    <group name="Allowed Warehouse">-->
+<!--                        <field name="allowed_warehouse" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>-->
+<!--                    </group>-->
+<!--                </group>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_users_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="type">form</field>
+        <field name ="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+               <field name="allowed_warehouse" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+             </field>
+        </field>
+    </record>
+
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="stock_location_form_view_id" model="ir.ui.view">
+        <field name="name">stock_location_form</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="linked_warehouse_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="stock_quant_form_view_id" model="ir.ui.view">
+        <field name="name">stock_quant_form_view</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_id']" position="after">
+                <field name="linked_warehouse" string="Warehouse"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

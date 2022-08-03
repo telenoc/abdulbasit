@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<record id="rule_for_warehouse_user" model="ir.rule">
+			<field name="name">Rule for Stock Warehouse</field>
+			<field ref="warehouse_user_access.model_stock_warehouse" name="model_id"/>
+			<field name="domain_force">[('id','in',[w.id for w in user.allowed_warehouse])]</field>
+    </record>
+	<record id="rule_for_warehouse_user1" model="ir.rule">
+			<field name="name">Rule for stock picking type</field>
+			<field ref="warehouse_user_access.model_stock_picking_type" name="model_id"/>
+			<field name="domain_force">[('warehouse_id','in',[w.id for w in user.allowed_warehouse])]</field>
+    </record>
+	<record id="rule_for_warehouse_user_transfer" model="ir.rule">
+			<field name="name">Rule for stock picking transfer</field>
+			<field ref="warehouse_user_access.model_stock_picking" name="model_id"/>
+			<field name="domain_force">[('picking_type_id.warehouse_id','in',[w.id for w in user.allowed_warehouse])]</field>
+    </record>
+	<record id="rule_for_warehouse_user_report" model="ir.rule">
+			<field name="name">Rule for inventory report</field>
+			<field ref="warehouse_user_access.model_stock_quant" name="model_id"/>
+			<field name="domain_force">[('linked_warehouse','in',[w.id for w in user.allowed_warehouse])]</field>
+    </record>
+<!--	<record id="rule_for_warehouse_user2" model="ir.rule">-->
+<!--			<field name="name">Rule for stock location</field>-->
+<!--			<field ref="warehouse_user_access.model_stock_quant" name="model_id"/>-->
+<!--			<field name="domain_force">['|',('linked_warehouse','in',[w.view_location_id for w in user.allowed_warehouse]),('location_id','=',False)]</field>-->
+<!--    </record>-->
+<!--	<record id="rule_for_warehouse_user3" model="ir.rule">-->
+<!--			<field name="name">Rule for stock picking</field>-->
+<!--			<field ref="warehouse_user_access.model_stock_picking" name="model_id"/>-->
+<!--			<field name="domain_force">[('location_id','in',[w.id for w in user.allowed_warehouse])]</field>-->
+<!--    </record>-->
+</odoo>
