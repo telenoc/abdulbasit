@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+
+        <record id="action_report_partnerledger" model="ir.actions.report">
+            <field name="name">Partner Ledger</field>
+            <field name="model">account.report.partner.ledger</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">parent_partner.report_partnerledger</field>
+            <field name="report_file">parent_partner.report_partnerledger</field>
+        </record>
+
+
+    </data>
+</odoo>

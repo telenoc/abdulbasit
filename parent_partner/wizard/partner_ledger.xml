@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_partner_ledger_view_form" model="ir.ui.view">
+        <field name="name">account_partner_legder_view_form</field>
+        <field name="model">partner.ledger.wizard</field>
+        <field name="arch" type="xml">
+            <form string="account_partner_legder_form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="amount_currency" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="date_from"/>
+                            <field name="target_move" position="after" invisible="1">
+                                <field name="enable_filter"/>
+                                <field name="debit_credit" attrs="{'invisible': [('enable_filter','=',True)]}"/>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="result_selection" invisible="1"/>
+                            <field name="reconciled" invisible="1"/>
+                            <field name="date_to" />
+                            <field name="display_account" widget="radio" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="partner_ids"
+                               options="{'no_open': True, 'no_create': True}"/>
+                        <field name="journal_ids" position="after" widget="many2many_tags" invisible="1">
+                                <notebook tabpos="up" colspan="4">
+                                    <page string="Comparison" name="comparison" attrs="{'invisible': [('enable_filter','=',False)]}">
+                                        <group>
+                                            <field name="label_filter" attrs="{'required': [('enable_filter', '=', True)]}"/>
+                                            <field name="filter_cmp"/>
+                                        </group>
+                                        <group string="Dates" attrs="{'invisible':[('filter_cmp', '!=', 'filter_date')]}">
+                                            <field name="date_from_cmp" attrs="{'required':[('filter_cmp', '=', 'filter_date')]}"/>
+                                            <field name="date_to_cmp" attrs="{'required':[('filter_cmp', '=', 'filter_date')]}"/>
+                                        </group>
+                                    </page>
+                                </notebook>
+                            </field>
+                    </group>
+                    <footer>
+                        <button name="print_partner_ledger_xlsx_reports" string="Excel Print" type="object" class="btn-primary" groups="account.group_account_readonly"/>
+                        <button name="check_report" class="oe_highlight"
+                            string="PDF Print" type="object"/>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+
+    <record id="action_account_partner_ledger_menu" model="ir.actions.act_window">
+        <field name="name">Partner Ledger</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.ledger.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account_partner_ledger_view_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_account" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <menuitem id="menu_partner_ledger"
+              name="Partner Ledger Wizard"
+              sequence="5"
+              parent="account_reports.account_reports_partners_reports_menu"
+              action="action_account_partner_ledger_menu"/>
+
+     <!-- Add to Partner Print button -->
+    <record id="action_partner_report_partnerledger" model="ir.actions.act_window">
+        <field name="name">Balance Statement (Partner Ledger)</field>
+        <field name="res_model">partner.ledger.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account_partner_ledger_view_form" />
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_partner" />
+        <field name="binding_type">report</field>
+        <field name="context">{
+            'default_partner_ids':active_ids,
+            'default_target_move': 'posted',
+            'default_result_selection': 'customer_supplier',
+            'default_reconciled': True,
+            'hide_partner':1,
+        }</field>
+        <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+    </record>
+
+    <record id="partner_wizard_record_save_view_form" model="ir.ui.view">
+            <field name="name">partner_wizard_record_save_view_form</field>
+            <field name="model">partner.report.wizard.report</field>
+            <field name="arch" type="xml">
+                <form string="Employee Pension Record Report">
+                    <sheet>
+                        <field name="name" invisible="1"/>
+                        <div>
+                            <h2>Report Generated</h2>
+                            <p>
+                                Here is the Excel Sheet:
+                                <field name="data" readonly="1" filename="name"/>
+                            </p>
+                        </div>
+                        <footer>
+                            <button string="Close" class="btn-default" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+</odoo>

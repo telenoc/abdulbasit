@@ -1,0 +1,45 @@
+<odoo>
+
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//span[@name='address_name']" position="before">
+                <field name="partner_id" attrs="{'invisible': [('company_type', '!=', 'company')]}" context="{'default_company_type': 'company'}"/>
+<!--                <field name="model_id"/>-->
+<!--                <field name="brand_id"/>-->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_move_form_inherits" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_user_id']" position="after">
+                <field name="parent_partner_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='status']" position="after">
+                <filter string="Parent Partner" name="group_by_parent_partner_id" context="{'group_by': 'parent_partner_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <template id="account_reports_backendDA" inherit_id="web.assets_backend" active="True">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <script type="text/javascript" src="/parent_partner/static/src/js/account.js"></script>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>
+
+
