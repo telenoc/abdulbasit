@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_partner_form" model="ir.ui.view">
+        <field name="name">	res.partner.form.new</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_customer"/>
+                <field name="is_vendor"/>
+                <field name="is_employee"/>
+                <field name="is_workers"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sales_order_form_customer_filter" model="ir.ui.view">
+        <field name="name">sale.order.form.customer.filter</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="domain">[('is_customer','=',True)]</attribute>
+            </field>
+        </field>
+    </record>
+
+   <!-- Inherit Form View to Modify it -->
+   <record id="sale_order_form_view_id" model="ir.ui.view">
+       <field name="name">sale_order_form</field>
+       <field name="model">sale.order</field>
+       <field name="inherit_id" ref="sale.view_order_form"/>
+       <field name="arch" type="xml">
+           <xpath expr="//field[@name='sale_order_template_id']" position="after">
+               <field name="Worker_id" domain="[('is_workers', '=',True)]"/>
+           </xpath>
+
+       </field>
+   </record>
+
+    <record id="account_invoice_form_line_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.line.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('move_type', 'not in', ('out_invoice', 'entry', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt'))]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
