@@ -1,0 +1,20 @@
+<odoo>
+  <data>
+
+    <record id="res_partner_view_team" model="ir.ui.view">
+        <field name="name">res.partner.view.team</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//field[@name='team_id']" position="replace">
+                <field name="team_id" string="Sales Team"/>
+            </xpath>
+        </field>
+    </record>
+
+
+<!--      <menuitem action="stock.stock_move_action" id="stock_move_menu" parent="stock.menu_warehouse_report" sequence="140"/>-->
+      <menuitem action="stock.stock_move_action" id="stock_move_menu" parent="stock.menu_warehouse_report" sequence="140"/>
+
+  </data>
+</odoo>
