@@ -1,0 +1,12 @@
+<odoo>
+  <data>
+
+    <!-- This Menu Item must have a parent and an action -->
+          <menuitem action="account_reports.action_account_report_partner_ledger"
+                name="Partner Ledger"
+                id="menu_action_account_report_partner_ledger"
+                parent="point_of_sale.menu_point_rep"
+                sequence="7"
+                />
+  </data>
+</odoo>
